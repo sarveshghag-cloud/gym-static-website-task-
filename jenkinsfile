@@ -1,7 +1,7 @@
 pipeline {
  agent any
  environment {
- SERVER_IP = '172.31.1.200'
+ SERVER_IP = '172.31.43.15' // target server  private IP address
  SSH_CREDENTIAL = 'gym-key'
  REPO_URL = 'https://github.com/sarveshghag-cloud/gym-static-website-task-.git'
  BRANCH = 'master'
