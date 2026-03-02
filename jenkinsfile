@@ -4,7 +4,7 @@ pipeline {
  SERVER_IP = '172.31.1.200'
  SSH_CREDENTIAL = 'gym-key'
  REPO_URL = 'https://github.com/sarveshghag-cloud/gym-static-website-task-.git'
- BRANCH = 'main'
+ BRANCH = 'master'
  REMOTE_USER = 'ubuntu'
  REMOTE_PATH = '/var/www/html'
  }
