@@ -15,15 +15,21 @@ pipeline {
  }
  }
  stage('Deploy to Target Server') {
- steps {
- sshagent([SSH_CREDENTIAL]) {
- sh """
- ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 'mkdir -p ${REMOTE_PATH}'
- scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PATH}
- """
- }
- }
- }
+    steps {
+        sshagent([SSH_CREDENTIAL]) {
+            sh """
+            # copy files to temp folder
+            scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:/tmp/
+
+            # move files using sudo
+            ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} '
+            sudo rm -rf ${REMOTE_PATH}/*
+            sudo mv /tmp/* ${REMOTE_PATH}/
+            '
+            """
+        }
+    }
+}
  stage('Restart Nginx') {
  steps {
  sshagent([SSH_CREDENTIAL]) {
